@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>GFA Mohács Kft. — Ötlettől a megoldásig | Fémszerkezetek, lépcsők, korlátok, kapuk</title>
+<meta name="description" content="Acél, rozsdamentes és alumínium szerkezetek tervezése, gyártása és telepítése Mohácson. Lépcsők, korlátok, kapuk, kerítések — ötlettől a megoldásig.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0c0e">
+<meta property="og:title" content="GFA Mohács — Ötlettől a megoldásig">
+<meta property="og:description" content="Fémszerkezet-gyártás Mohácson: lépcsők, korlátok, kapuk, kerítések acélból, rozsdamentesből és alumíniumból.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23ff4d00'/%3E%3Ctext x='32' y='44' font-family='Arial Black,sans-serif' font-size='34' font-weight='900' text-anchor='middle' fill='%23fff'%3EG%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62.5..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+</head>
+<body>
+
+<a class="skip" href="#fo-tartalom">Ugrás a tartalomhoz</a>
+
+<!-- ===== Preloader ===== -->
+<div class="preloader" id="preloader">
+  <div class="preloader__top">
+    <span class="mono">GFA MOHÁCS KFT. × KIRÓ MŰHELY</span>
+    <span class="mono">EST. MOHÁCS, HU</span>
+  </div>
+  <div class="preloader__mid d">GFA</div>
+  <div class="preloader__bot">
+    <span class="mono" style="color:var(--faint)">FÉMSZERKEZET-GYÁRTÁS — BETÖLTÉS</span>
+    <div class="preloader__bar"><i id="pl-bar"></i></div>
+    <span class="preloader__pct" id="pl-pct">000</span>
+  </div>
+</div>
+<script>/* safety: never trap the user on the preloader */
+setTimeout(function(){var p=document.getElementById('preloader');if(p&&!p.dataset.done){p.classList.add('is-done');}},7000);</script>
+
+<!-- ===== Fixed 3D canvas ===== -->
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ===== Custom cursor ===== -->
+<div class="cur-dot" aria-hidden="true"></div>
+<div class="cur-ring" aria-hidden="true"><span></span></div>
+
+<!-- ===== Header ===== -->
+<header class="hdr" id="hdr">
+  <a class="hdr__logo" href="#hero" data-scroll>GFA<sup>®</sup></a>
+  <nav class="hdr__nav" aria-label="Fő navigáció">
+    <a href="#bemutatkozas" data-scroll>Bemutatkozás</a>
+    <a href="#szolgaltatasok" data-scroll>Szolgáltatások</a>
+    <a href="#anyagok" data-scroll>Anyagok</a>
+    <a href="#folyamat" data-scroll>Folyamat</a>
+    <a href="#referenciak" data-scroll>Referenciák</a>
+    <a href="#kapcsolat" data-scroll>Kapcsolat</a>
+  </nav>
+  <a class="hdr__cta" href="#kapcsolat" data-scroll>Ajánlatkérés</a>
+  <button class="burger" id="burger" aria-label="Menü megnyitása" aria-expanded="false"><i></i><i></i></button>
+</header>
+
+<!-- ===== Mobile menu ===== -->
+<div class="menu" id="menu">
+  <a class="menu__link" href="#bemutatkozas" data-scroll><em>01</em>Bemutatkozás</a>
+  <a class="menu__link" href="#szolgaltatasok" data-scroll><em>02</em>Szolgáltatások</a>
+  <a class="menu__link" href="#anyagok" data-scroll><em>03</em>Anyagok</a>
+  <a class="menu__link" href="#folyamat" data-scroll><em>04</em>Folyamat</a>
+  <a class="menu__link" href="#referenciak" data-scroll><em>05</em>Referenciák</a>
+  <a class="menu__link" href="#kapcsolat" data-scroll><em>06</em>Kapcsolat</a>
+  <div class="menu__foot mono">
+    <span>+36 20 327 5357 · INFO@GFAGYARTAS.HU</span>
+    <span>+36 20 481 0411 · KIROMUHELY@GMAIL.COM</span>
+    <span style="color:var(--hot)">MOHÁCS — 45.99° N, 18.68° E</span>
+  </div>
+</div>
+
+<main id="fo-tartalom">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <p class="hero__kicker mono fade-up">GFA Mohács Kft. <b>×</b> Kiró Műhely — Fémszerkezet-gyártás</p>
+      <h1 class="hero__title d">
+        <span class="hline"><span class="rl"><span>Ötlettől a</span></span></span>
+        <span class="hline"><span class="rl"><span class="molten">megoldásig</span></span></span>
+      </h1>
+      <p class="hero__sub fade-up">Acél, rozsdamentes és alumínium szerkezetek tervezése, gyártása és
+        telepítése — több mint 30 év szakmai tapasztalattal, Mohácsról az egész országba.</p>
+      <div class="hero__cta fade-up">
+        <a class="btn" href="#kapcsolat" data-scroll><span>Ajánlatot kérek</span></a>
+        <a class="btn btn--ghost" href="#referenciak" data-scroll><span>Munkáink ↗</span></a>
+      </div>
+      <div class="dim fade-up mono" aria-hidden="true"><i></i><span>Ø 42,4 × 2,6 mm — korlátcső</span><i></i></div>
+    </div>
+
+    <span class="hero__anno anno--1 mono" aria-hidden="true">Műszaki rajz № 2026-06</span>
+    <span class="hero__anno anno--2 mono" aria-hidden="true">AISI 304 — szálcsiszolt</span>
+
+    <div class="hero__scroll mono" aria-hidden="true">Görgess<i></i></div>
+    <aside class="hero__coords mono">45.99° N — 18.68° E<br>Mohács, HU</aside>
+    <span class="vline mono" aria-hidden="true">Fémszerkezet-gyártás — Mohács, HU</span>
+  </section>
+
+  <!-- ===== Marquee ===== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Lépcsők <b>◆</b> Korlátok <b>◆</b> Kapuk <b>◆</b> Kerítések <b>◆</b> Előtetők <b>◆</b> Acélszerkezetek <b>◆</b> Egyedi bútorok <b>◆</b> Bérgyártás <b>◆</b></span>
+      <span>Lépcsők <b>◆</b> Korlátok <b>◆</b> Kapuk <b>◆</b> Kerítések <b>◆</b> Előtetők <b>◆</b> Acélszerkezetek <b>◆</b> Egyedi bútorok <b>◆</b> Bérgyártás <b>◆</b></span>
+    </div>
+  </div>
+
+  <!-- ===== 01 BEMUTATKOZÁS ===== -->
+  <section class="section about" id="bemutatkozas">
+    <div class="container">
+      <header class="shead">
+        <span class="shead__idx mono">/ 01</span>
+        <i class="shead__rule"></i>
+        <span class="shead__tag mono scr">Bemutatkozás — 01/06</span>
+      </header>
+
+      <div class="about__grid">
+        <div class="about__text">
+          <h2 class="stitle d">
+            <span class="rl"><span>Két műhely,</span></span>
+            <span class="rl"><span>egy mérce: <span class="molten">a precizitás.</span></span></span>
+          </h2>
+          <div class="about__body">
+            <p class="fade-up">A <strong>GFA Mohács Kft.</strong>-t Grain László alapította, aki több mint
+              három évtizede dolgozik fém- és acélszerkezetek gyártásában — itthon és külföldön egyaránt.
+              A <strong>Kiró Műhelyt</strong> Orovecz Krisztián vezeti, az acélszerkezetek és
+              kerítésrendszerek specialistája.</p>
+            <p class="fade-up">Közösen mindent vállalunk az első vázlattól az utolsó csavarig: felmérés,
+              tervezés, gyártás és helyszíni telepítés — egy kézből, garanciával.</p>
+          </div>
+        </div>
+
+        <div class="about__plates fade-up" aria-hidden="false">
+          <div class="plate plate--gl"><i></i>
+            <span class="plate__init d">GL</span>
+            <div class="plate__meta mono">
+              <b>Grain László</b>
+              <span>Alapító — GFA Mohács Kft.</span>
+              <em>Rozsdamentes · alumínium · üveg</em>
+            </div>
+          </div>
+          <div class="plate plate--ok"><i></i>
+            <span class="plate__init d">OK</span>
+            <div class="plate__meta mono">
+              <b>Orovecz Krisztián</b>
+              <span>Alapító — Kiró Műhely</span>
+              <em>Acélszerkezet · kerítés · kapu</em>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat fade-up">
+          <div class="stat__num"><span data-count="30">0</span><b>+</b></div>
+          <div class="stat__lbl mono">Év szakmai tapasztalat</div>
+        </div>
+        <div class="stat fade-up">
+          <div class="stat__num"><span data-count="2">0</span></div>
+          <div class="stat__lbl mono">Műhely, egy csapatként</div>
+        </div>
+        <div class="stat fade-up">
+          <div class="stat__num"><span data-count="8">0</span></div>
+          <div class="stat__lbl mono">Szakterület fémből</div>
+        </div>
+        <div class="stat fade-up">
+          <div class="stat__num"><span data-count="100">0</span><b>%</b></div>
+          <div class="stat__lbl mono">Garancia a szerkezetekre</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 02 SZOLGÁLTATÁSOK ===== -->
+  <section class="section" id="szolgaltatasok">
+    <div class="container">
+      <header class="shead">
+        <span class="shead__idx mono">/ 02</span>
+        <i class="shead__rule"></i>
+        <span class="shead__tag mono scr">Szolgáltatások — 02/06</span>
+      </header>
+      <h2 class="stitle d" style="margin-bottom:clamp(36px,6vh,72px)">
+        <span class="rl"><span>Amit fémből elképzelsz,</span></span>
+        <span class="rl"><span>mi <span class="molten">legyártjuk.</span></span></span>
+      </h2>
+
+      <ul class="svc-list" id="svc-list">
+        <li class="svc-row" data-art="0">
+          <span class="svc-row__idx mono">/ 01</span>
+          <h3 class="svc-row__name d">Lépcsők</h3>
+          <p class="svc-row__desc">Beltéri és kültéri lépcsők acélból és rozsdamentesből</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+        <li class="svc-row" data-art="1">
+          <span class="svc-row__idx mono">/ 02</span>
+          <h3 class="svc-row__name d">Korlátok</h3>
+          <p class="svc-row__desc">Erkély-, terasz- és lépcsőkorlátok, üvegbetéttel is</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+        <li class="svc-row" data-art="2">
+          <span class="svc-row__idx mono">/ 03</span>
+          <h3 class="svc-row__name d">Kapuk</h3>
+          <p class="svc-row__desc">Toló-, úszó- és kétszárnyú kapuk, kapumozgatással</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+        <li class="svc-row" data-art="3">
+          <span class="svc-row__idx mono">/ 04</span>
+          <h3 class="svc-row__name d">Kerítések</h3>
+          <p class="svc-row__desc">2D és 3D táblás rendszerek, egyedi kerítésmezők</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+        <li class="svc-row" data-art="4">
+          <span class="svc-row__idx mono">/ 05</span>
+          <h3 class="svc-row__name d">Előtetők</h3>
+          <p class="svc-row__desc">Előtetők, kocsibeállók, teraszfedések</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+        <li class="svc-row" data-art="5">
+          <span class="svc-row__idx mono">/ 06</span>
+          <h3 class="svc-row__name d">Acélszerkezetek</h3>
+          <p class="svc-row__desc">Csarnokok, ipari épületek, tartószerkezetek</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+        <li class="svc-row" data-art="6">
+          <span class="svc-row__idx mono">/ 07</span>
+          <h3 class="svc-row__name d">Egyedi bútorok</h3>
+          <p class="svc-row__desc">Ipari stílusú vállalati bútorok és tárolók</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+        <li class="svc-row" data-art="7">
+          <span class="svc-row__idx mono">/ 08</span>
+          <h3 class="svc-row__name d">Bérgyártás</h3>
+          <p class="svc-row__desc">Sorozat- és szerződéses gyártás műhelyeknek</p>
+          <span class="svc-row__arrow">↗</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- floating service preview -->
+  <div class="pv" id="pv" aria-hidden="true">
+    <div class="pv__art art art--steps"></div>
+    <div class="pv__art art art--rails"></div>
+    <div class="pv__art art art--gates"></div>
+    <div class="pv__art art art--fence"></div>
+    <div class="pv__art art art--canopy"></div>
+    <div class="pv__art art art--ind"></div>
+    <div class="pv__art art art--furn"></div>
+    <div class="pv__art art art--batch"></div>
+    <span class="pv__num d" id="pv-num">01</span>
+  </div>
+
+  <!-- ===== 03 ANYAGOK ===== -->
+  <section class="section materials" id="anyagok">
+    <div class="container">
+      <header class="shead">
+        <span class="shead__idx mono">/ 03</span>
+        <i class="shead__rule"></i>
+        <span class="shead__tag mono scr">Anyagok — 03/06</span>
+      </header>
+
+      <div class="materials__grid">
+        <div class="materials__panel">
+          <h2 class="stitle d" style="margin-bottom:clamp(28px,4vh,52px)">
+            <span class="rl"><span>Válassz anyagot —</span></span>
+            <span class="rl"><span>mi <span class="molten">szerkezetet</span> adunk neki.</span></span>
+          </h2>
+
+          <div class="mat-tabs" role="tablist" aria-label="Anyagválasztó">
+            <button class="mat-tab is-active" data-mat="0" role="tab" aria-selected="true"><em>S235JR</em>Acél</button>
+            <button class="mat-tab" data-mat="1" role="tab" aria-selected="false"><em>AISI 304</em>Rozsdamentes</button>
+            <button class="mat-tab" data-mat="2" role="tab" aria-selected="false"><em>EN 6060</em>Alumínium</button>
+          </div>
+
+          <div class="mat-infos">
+            <article class="mat-info is-active">
+              <p>A teherhordó szerkezetek alapja. Tűzihorganyzott vagy porszórt felülettel
+                évtizedekig állja az időjárást — kapuk, kerítések, csarnokok anyaga.</p>
+              <dl>
+                <div><dt class="mono">Sűrűség</dt><dd class="mono">7 850 kg/m³</dd></div>
+                <div><dt class="mono">Folyáshatár</dt><dd class="mono">235 MPa</dd></div>
+                <div><dt class="mono">Felület</dt><dd class="mono">tűzihorganyzott · porszórt</dd></div>
+              </dl>
+            </article>
+            <article class="mat-info">
+              <p>Időtálló elegancia kültérre és beltérre. Szálcsiszolt vagy tükörpolírozott
+                felülettel — korlátok, lépcsők és design-elemek első választása.</p>
+              <dl>
+                <div><dt class="mono">Sűrűség</dt><dd class="mono">7 900 kg/m³</dd></div>
+                <div><dt class="mono">Korrózióállóság</dt><dd class="mono">kiváló — 18/8 CrNi</dd></div>
+                <div><dt class="mono">Felület</dt><dd class="mono">szálcsiszolt · tükörpolír</dd></div>
+              </dl>
+            </article>
+            <article class="mat-info">
+              <p>Könnyű, korrózióálló és formálható — kapukhoz, korlátokhoz és árnyékolókhoz
+                ideális, eloxált vagy porszórt felülettel.</p>
+              <dl>
+                <div><dt class="mono">Sűrűség</dt><dd class="mono">2 700 kg/m³</dd></div>
+                <div><dt class="mono">Tömeg</dt><dd class="mono">~ az acél harmada</dd></div>
+                <div><dt class="mono">Felület</dt><dd class="mono">eloxált · porszórt</dd></div>
+              </dl>
+            </article>
+          </div>
+        </div>
+
+        <div class="materials__ghost" aria-hidden="true"><!-- a 3D lépcső helye --></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 04 FOLYAMAT (pinned) ===== -->
+  <section class="section process" id="folyamat">
+    <div class="container" style="width:100%">
+      <header class="shead">
+        <span class="shead__idx mono">/ 04</span>
+        <i class="shead__rule"></i>
+        <span class="shead__tag mono scr">Folyamat — 04/06</span>
+      </header>
+
+      <div class="process__stage">
+        <div class="pnum" id="pnum" aria-hidden="true">01</div>
+
+        <article class="pstep is-active">
+          <p class="pstep__kicker mono">01 / Konzultáció</p>
+          <h3 class="pstep__title d">Meghallgatjuk az ötletet</h3>
+          <p class="pstep__body">Felmérjük a helyszínt, átbeszéljük az elképzelést, és pontos műszaki
+            igényekre fordítjuk — milliméterre.</p>
+        </article>
+        <article class="pstep">
+          <p class="pstep__kicker mono">02 / Tervezés</p>
+          <h3 class="pstep__title d">Terv és árajánlat</h3>
+          <p class="pstep__body">Műszaki tervek és átlátható árajánlat készül — tételesen,
+            meglepetések nélkül.</p>
+        </article>
+        <article class="pstep">
+          <p class="pstep__kicker mono">03 / Gyártás</p>
+          <h3 class="pstep__title d">Vágunk, hajlítunk, hegesztünk</h3>
+          <p class="pstep__body">Műhelyünkben minden elem precízen készül — a szerkezet
+            a szemed előtt áll össze.</p>
+        </article>
+        <article class="pstep">
+          <p class="pstep__kicker mono">04 / Telepítés</p>
+          <h3 class="pstep__title d">Helyszíni átadás</h3>
+          <p class="pstep__body">A kész szerkezetet a helyszínen szereljük össze és adjuk át —
+            garanciával minden elemre.</p>
+        </article>
+      </div>
+
+      <div class="prail">
+        <div class="prail__bar"><i></i></div>
+        <div class="prail__labels mono" id="prail-labels">
+          <span class="is-active">Konzultáció</span>
+          <span>Tervezés</span>
+          <span>Gyártás</span>
+          <span>Telepítés</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 05 REFERENCIÁK (light, horizontal) ===== -->
+  <section class="refs" id="referenciak">
+    <div class="refs__head">
+      <header class="shead">
+        <span class="shead__idx mono" style="color:var(--hot)">/ 05</span>
+        <i class="shead__rule"></i>
+        <span class="shead__tag mono scr">Referenciák — 05/06</span>
+      </header>
+      <h2 class="stitle d">
+        <span class="rl"><span>Munkák, amikre</span></span>
+        <span class="rl"><span>büszkék vagyunk.</span></span>
+      </h2>
+      <p class="refs__hint mono">Görgess tovább — a sor veled mozog →</p>
+    </div>
+
+    <div class="ref-track" id="ref-track">
+      <figure class="ref-card" data-cursor="MEGNÉZ">
+        <div class="ref-card__img">
+          <div class="art art--steps"></div>
+          <span class="ref-card__idx mono">R—01</span>
+          <span class="ref-card__tag mono">Rozsdamentes</span>
+        </div>
+        <figcaption class="ref-card__cap">
+          <span class="ref-card__name">Lebegő lépcső</span>
+          <span class="ref-card__loc mono">Családi ház · Pécs</span>
+        </figcaption>
+      </figure>
+      <figure class="ref-card" data-cursor="MEGNÉZ">
+        <div class="ref-card__img">
+          <div class="art art--rails"></div>
+          <span class="ref-card__idx mono">R—02</span>
+          <span class="ref-card__tag mono">Üveg + inox</span>
+        </div>
+        <figcaption class="ref-card__cap">
+          <span class="ref-card__name">Panoráma üvegkorlát</span>
+          <span class="ref-card__loc mono">Penthouse · Budapest</span>
+        </figcaption>
+      </figure>
+      <figure class="ref-card" data-cursor="MEGNÉZ">
+        <div class="ref-card__img">
+          <div class="art art--gates"></div>
+          <span class="ref-card__idx mono">R—03</span>
+          <span class="ref-card__tag mono">Acél</span>
+        </div>
+        <figcaption class="ref-card__cap">
+          <span class="ref-card__name">Úszókapu — 12 m</span>
+          <span class="ref-card__loc mono">Ipari telephely · Mohács</span>
+        </figcaption>
+      </figure>
+      <figure class="ref-card" data-cursor="MEGNÉZ">
+        <div class="ref-card__img">
+          <div class="art art--fence"></div>
+          <span class="ref-card__idx mono">R—04</span>
+          <span class="ref-card__tag mono">Horganyzott</span>
+        </div>
+        <figcaption class="ref-card__cap">
+          <span class="ref-card__name">3D kerítésrendszer</span>
+          <span class="ref-card__loc mono">Logisztikai központ · Baja</span>
+        </figcaption>
+      </figure>
+      <figure class="ref-card" data-cursor="MEGNÉZ">
+        <div class="ref-card__img">
+          <div class="art art--canopy"></div>
+          <span class="ref-card__idx mono">R—05</span>
+          <span class="ref-card__tag mono">Alumínium</span>
+        </div>
+        <figcaption class="ref-card__cap">
+          <span class="ref-card__name">Ipari előtető</span>
+          <span class="ref-card__loc mono">Társasház · Szekszárd</span>
+        </figcaption>
+      </figure>
+      <figure class="ref-card" data-cursor="MEGNÉZ">
+        <div class="ref-card__img">
+          <div class="art art--ind"></div>
+          <span class="ref-card__idx mono">R—06</span>
+          <span class="ref-card__tag mono">Kovácsoltvas</span>
+        </div>
+        <figcaption class="ref-card__cap">
+          <span class="ref-card__name">Kovácsolt nagykapu</span>
+          <span class="ref-card__loc mono">Birtok · Villány</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ===== 06 KAPCSOLAT ===== -->
+  <section class="section contact" id="kapcsolat">
+    <div class="container">
+      <header class="shead">
+        <span class="shead__idx mono">/ 06</span>
+        <i class="shead__rule"></i>
+        <span class="shead__tag mono scr">Kapcsolat — 06/06</span>
+      </header>
+
+      <p class="mono fade-up" style="color:var(--steel-dim)">Mondd el az ötleted — mi hozzuk a megoldást.</p>
+      <a class="contact__mega d" href="mailto:info@gfagyartas.hu">
+        <span class="rl"><span>Beszéljünk<span class="arrow"> ↗</span></span></span>
+      </a>
+
+      <div class="contact__cards">
+        <div class="ccard fade-up">
+          <span class="ccard__role mono">Rozsdamentes · alumínium · üveg</span>
+          <h3 class="ccard__name d">Grain László</h3>
+          <p class="ccard__scope">GFA Mohács Kft. — alapító. Lépcsők, korlátok, egyedi
+            rozsdamentes és alumínium szerkezetek.</p>
+          <div class="ccard__links">
+            <a href="tel:+36203275357">+36 20 327 5357</a>
+            <a href="mailto:info@gfagyartas.hu">info@gfagyartas.hu</a>
+          </div>
+        </div>
+        <div class="ccard fade-up">
+          <span class="ccard__role mono">Acélszerkezet · kerítés · kapu</span>
+          <h3 class="ccard__name d">Orovecz Krisztián</h3>
+          <p class="ccard__scope">Kiró Műhely — alapító. Kapuk, kerítésrendszerek, csarnokok
+            és ipari acélszerkezetek.</p>
+          <div class="ccard__links">
+            <a href="tel:+36204810411">+36 20 481 0411</a>
+            <a href="mailto:kiromuhely@gmail.com">kiromuhely@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__col">
+      <p class="footer__tag">Fémből építünk — <b>ötlettől a megoldásig.</b></p>
+      <p style="margin-top:18px">GFA Mohács Kft. × Kiró Műhely<br>Mohács, Magyarország</p>
+    </div>
+    <div class="footer__col">
+      <h4 class="mono">Menü</h4>
+      <a href="#bemutatkozas" data-scroll>Bemutatkozás</a>
+      <a href="#szolgaltatasok" data-scroll>Szolgáltatások</a>
+      <a href="#anyagok" data-scroll>Anyagok</a>
+      <a href="#referenciak" data-scroll>Referenciák</a>
+    </div>
+    <div class="footer__col">
+      <h4 class="mono">Kapcsolat</h4>
+      <a href="tel:+36203275357">+36 20 327 5357</a>
+      <a href="mailto:info@gfagyartas.hu">info@gfagyartas.hu</a>
+      <a href="tel:+36204810411">+36 20 481 0411</a>
+      <a href="mailto:kiromuhely@gmail.com">kiromuhely@gmail.com</a>
+    </div>
+  </div>
+  <div class="footer__mega d" aria-hidden="true">GFA</div>
+  <div class="footer__bar mono">
+    <span>© 2026 GFA Mohács Kft. × Kiró Műhely — Minden jog fenntartva.</span>
+    <span>Koncepcióterv — újragondolt dizájn</span>
+    <a href="#hero" data-scroll>Vissza az elejére ↑</a>
+  </div>
+</footer>
+
+<!-- ============================================================
+     APP — inline module so the page also runs from file://
+     ============================================================ -->
+<script type="module">
+/* ---------- flags & helpers ---------- */
+const $  = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const touch   = matchMedia('(hover: none), (pointer: coarse)').matches;
+const hasGsap = typeof window.gsap !== 'undefined' && typeof window.ScrollTrigger !== 'undefined';
+
+if (hasGsap) {
+  gsap.registerPlugin(ScrollTrigger);
+  document.documentElement.classList.add('has-anim');
+}
+history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+/* ---------- smooth scroll (Lenis) ---------- */
+let lenis = null;
+if (hasGsap && typeof window.Lenis !== 'undefined' && !reduced) {
+  lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add(t => lenis.raf(t * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+
+/* shared camera/scene state — tweened by ScrollTrigger, read by the renderer.
+   explodeT is the target (set from scroll), explode is the smoothed value the
+   renderer eases toward it every frame. */
+const view = { camX: 3.2, camY: 2.5, camZ: 7.6, tY: 2.05, gX: 1.9, gRot: 0, gRotPin: 0, explode: 0, explodeT: 0 };
+
+/* ============================================================
+   THREE.JS — procedural spiral staircase
+   ============================================================ */
+async function initScene() {
+  const canvas = $('#gl');
+  if (!canvas) return null;
+
+  let THREE, RoomEnvironment;
+  try {
+    THREE = await import('three');
+    ({ RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js'));
+  } catch (e) { canvas.style.display = 'none'; return null; }
+
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  } catch (e) { canvas.style.display = 'none'; return null; }
+
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setSize(innerWidth, innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.12;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+  const scene = new THREE.Scene();
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+  const cam = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.1, 60);
+  cam.position.set(view.camX, view.camY, view.camZ);
+
+  /* lights — warm forge rim + cool fill */
+  scene.add(new THREE.AmbientLight(0x33363c, 0.5));
+  const keyWarm = new THREE.DirectionalLight(0xff7034, 1.4);
+  keyWarm.position.set(-5, 2.5, 4);
+  scene.add(keyWarm);
+  const fillCool = new THREE.DirectionalLight(0x9fb6d4, 0.9);
+  fillCool.position.set(5, 7, -3);
+  scene.add(fillCool);
+  const weld = new THREE.PointLight(0xffb066, 0, 11, 1.8);
+  scene.add(weld);
+
+  /* ---------- staircase geometry ---------- */
+  const INNER_R = 0.16, W = 1.5, STEP_ANG = 0.46, RISE = 0.25, COUNT = 15;
+  const R_OUT = INNER_R + W, TOTAL_ANG = COUNT * STEP_ANG, TOTAL_RISE = COUNT * RISE;
+
+  const rig = new THREE.Group();          // moved by choreography
+  const stair = new THREE.Group();        // the staircase itself
+  stair.position.y = -TOTAL_RISE / 2 + 1.9; // center vertically around lookAt
+  rig.add(stair);
+  scene.add(rig);
+
+  const matSteps = new THREE.MeshPhysicalMaterial({ color: 0x969ca5, metalness: 1, roughness: 0.42, envMapIntensity: 1.15 });
+  const matRail  = new THREE.MeshPhysicalMaterial({ color: 0xcdd2d9, metalness: 1, roughness: 0.2,  envMapIntensity: 1.25, transparent: true });
+
+  /* column */
+  const col = new THREE.Mesh(new THREE.CylinderGeometry(INNER_R - 0.02, INNER_R - 0.02, TOTAL_RISE + 1.8, 28), matSteps);
+  col.position.y = (TOTAL_RISE + 1.8) / 2 - 0.25;
+  stair.add(col);
+
+  /* steps + balusters (explodable) */
+  const rnd = n => { const x = Math.sin(n * 127.1 + 13.7) * 43758.5453; return x - Math.floor(x); };
+  const treadGeo = new THREE.BoxGeometry(W, 0.07, 0.6);
+  const balGeo = new THREE.CylinderGeometry(0.013, 0.013, 1.02, 8);
+  const pivots = [];
+
+  for (let i = 0; i < COUNT; i++) {
+    const pivot = new THREE.Group();
+    const tread = new THREE.Mesh(treadGeo, matSteps);
+    tread.position.x = INNER_R + W / 2;
+    pivot.add(tread);
+    const bal = new THREE.Mesh(balGeo, matRail);
+    bal.position.set(R_OUT - 0.09, 0.55, 0);
+    pivot.add(bal);
+
+    pivot.userData = {
+      asmPos: new THREE.Vector3(0, i * RISE, 0),
+      asmRotY: -i * STEP_ANG,
+      scPos: new THREE.Vector3((rnd(i) - 0.5) * 9, i * RISE + (rnd(i + 40) - 0.5) * 5, (rnd(i + 80) - 0.5) * 7 - 1.5),
+      scRot: new THREE.Euler((rnd(i + 120) - 0.5) * 2.4, (rnd(i + 160) - 0.5) * 3.4, (rnd(i + 200) - 0.5) * 1.8)
+    };
+    stair.add(pivot);
+    pivots.push(pivot);
+  }
+
+  /* helical handrail + mid-rail */
+  function helixPoints(yOff) {
+    const pts = [];
+    for (let s = 0; s <= 96; s++) {
+      const tt = -0.03 + (s / 96) * 1.09;
+      const ang = tt * TOTAL_ANG, r = R_OUT - 0.09;
+      pts.push(new THREE.Vector3(r * Math.cos(ang), tt * TOTAL_RISE + yOff, r * Math.sin(ang)));
+    }
+    return pts;
+  }
+  const rail = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(helixPoints(1.06)), 140, 0.035, 10), matRail);
+  const midRail = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(helixPoints(0.58)), 140, 0.012, 8), matRail);
+  stair.add(rail, midRail);
+
+  /* ground: polar grid + soft shadow + dashed ring */
+  const grid = new THREE.PolarGridHelper(4.6, 12, 5, 64, 0x33373d, 0x202327);
+  grid.material.transparent = true;
+  grid.material.opacity = 0.28;
+  grid.position.y = -TOTAL_RISE / 2 + 1.9;
+  rig.add(grid);
+
+  const shCanvas = document.createElement('canvas');
+  shCanvas.width = shCanvas.height = 256;
+  const sctx = shCanvas.getContext('2d');
+  const grad = sctx.createRadialGradient(128, 128, 10, 128, 128, 128);
+  grad.addColorStop(0, 'rgba(0,0,0,.7)');
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  sctx.fillStyle = grad;
+  sctx.fillRect(0, 0, 256, 256);
+  const shadow = new THREE.Mesh(
+    new THREE.PlaneGeometry(7, 7),
+    new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(shCanvas), transparent: true, depthWrite: false })
+  );
+  shadow.rotation.x = -Math.PI / 2;
+  shadow.position.y = grid.position.y + 0.005;
+  rig.add(shadow);
+
+  const ringPts = [];
+  for (let s = 0; s <= 120; s++) {
+    const a = (s / 120) * Math.PI * 2;
+    ringPts.push(new THREE.Vector3(Math.cos(a) * 2.5, 0, Math.sin(a) * 2.5));
+  }
+  const ring = new THREE.Line(
+    new THREE.BufferGeometry().setFromPoints(ringPts),
+    new THREE.LineDashedMaterial({ color: 0x4a505a, dashSize: 0.14, gapSize: 0.1, transparent: true, opacity: 0.65 })
+  );
+  ring.computeLineDistances();
+  ring.position.y = grid.position.y + 0.01;
+  rig.add(ring);
+
+  /* welding sparks */
+  const S_COUNT = 130;
+  const sPos = new Float32Array(S_COUNT * 3);
+  const sparks = [];
+  for (let i = 0; i < S_COUNT; i++) {
+    const a = Math.random() * Math.PI * 2, r = 0.7 + Math.random() * 1.1;
+    sparks.push({
+      bx: Math.cos(a) * r, bz: Math.sin(a) * r,
+      vy: 0.25 + Math.random() * 0.8,
+      vx: (Math.random() - 0.5) * 0.16, vz: (Math.random() - 0.5) * 0.16,
+      life: Math.random() * 2.2, max: 1 + Math.random() * 1.6
+    });
+  }
+  const sGeo = new THREE.BufferGeometry();
+  sGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3));
+  const sparkPts = new THREE.Points(sGeo, new THREE.PointsMaterial({
+    color: 0xff7a2a, size: 0.045, transparent: true, opacity: 0.85,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  }));
+  sparkPts.position.y = grid.position.y;
+  rig.add(sparkPts);
+
+  /* ---------- runtime state ---------- */
+  const sm = { x: 0, y: 0, tx: 0, ty: 0 };
+  if (!touch) addEventListener('pointermove', e => {
+    sm.tx = (e.clientX / innerWidth - 0.5) * 2;
+    sm.ty = (e.clientY / innerHeight - 0.5) * 2;
+  });
+
+  const intro = { s: 0.55, r: -1.1 };
+  const spin = { v: 0 };
+  let auto = 0, running = true, nextWeld = 2.5, weldT = -1;
+  let aspect = innerWidth / innerHeight;
+
+  addEventListener('resize', () => {
+    aspect = innerWidth / innerHeight;
+    cam.aspect = aspect;
+    cam.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+
+  const clock = new THREE.Clock();
+  let elapsed = 0;
+  const refsEl = document.getElementById('referenciak');
+
+  function frame() {
+    requestAnimationFrame(frame);
+    /* the canvas is fully covered once the opaque refs section reaches the
+       viewport top — skip rendering there (cheaper than ScrollTrigger, and
+       immune to pin-spacer position miscalculations) */
+    if (refsEl) running = refsEl.getBoundingClientRect().top > 2;
+    if (!running || document.hidden) return;
+    const dt = Math.min(clock.getDelta(), 0.05);
+    elapsed += dt;
+    auto += dt * (reduced ? 0.015 : 0.06);
+
+    sm.x += (sm.tx - sm.x) * 0.06;
+    sm.y += (sm.ty - sm.y) * 0.06;
+
+    /* explode / assemble — ease toward the scroll-driven target */
+    view.explode += (view.explodeT - view.explode) * Math.min(1, dt * 4);
+    if (Math.abs(view.explodeT - view.explode) < 0.0005) view.explode = view.explodeT;
+    const e = view.explode;
+    for (let i = 0; i < COUNT; i++) {
+      const u = pivots[i].userData;
+      let p = clamp(e * 1.32 - i * 0.022, 0, 1);
+      p = p * p * (3 - 2 * p);
+      pivots[i].position.lerpVectors(u.asmPos, u.scPos, p);
+      pivots[i].rotation.set(u.scRot.x * p, u.asmRotY + (u.scRot.y - u.asmRotY) * p, u.scRot.z * p);
+    }
+    const railOp = clamp(1 - e * 1.7, 0, 1);
+    matRail.opacity = railOp;
+    rail.visible = midRail.visible = railOp > 0.01;
+
+    /* weld flash */
+    if (elapsed > nextWeld && weldT < 0) {
+      weldT = 0;
+      const t = Math.random(), a = t * TOTAL_ANG;
+      weld.position.set(Math.cos(a) * (R_OUT - 0.1), stair.position.y + t * TOTAL_RISE + 0.2, Math.sin(a) * (R_OUT - 0.1));
+      nextWeld = elapsed + 4 + Math.random() * 5;
+    }
+    if (weldT >= 0) {
+      weldT += dt;
+      const env = Math.max(0, 1 - weldT / 0.45);
+      weld.intensity = env * (8 + Math.sin(weldT * 150) * 6 + Math.random() * 5);
+      if (weldT > 0.45) { weldT = -1; weld.intensity = 0; }
+    }
+
+    /* sparks */
+    for (let i = 0; i < S_COUNT; i++) {
+      const s = sparks[i];
+      s.life += dt;
+      if (s.life > s.max) { s.life = 0; }
+      const t = s.life;
+      sPos[i * 3]     = s.bx + s.vx * t * 6;
+      sPos[i * 3 + 1] = t * s.vy * 2.2;
+      sPos[i * 3 + 2] = s.bz + s.vz * t * 6;
+    }
+    sGeo.attributes.position.needsUpdate = true;
+
+    /* apply choreography */
+    const ds = aspect < 1 ? 1 + (1 - aspect) * 1.15 : 1;
+    rig.position.x = view.gX * (aspect < 1 ? 0.25 : 1);
+    rig.rotation.y = view.gRot + view.gRotPin + auto + spin.v + sm.x * 0.12 + intro.r;
+    rig.scale.setScalar(intro.s);
+    cam.position.set(view.camX + sm.x * 0.55, view.camY - sm.y * 0.45, view.camZ * ds);
+    cam.lookAt(0, view.tY, 0);
+
+    renderer.render(scene, cam);
+  }
+  frame();
+
+  /* material presets */
+  const presets = [
+    { color: 0x969ca5, rough: 0.42, metal: 1.0  },  // acél
+    { color: 0xe9edf2, rough: 0.16, metal: 1.0  },  // rozsdamentes
+    { color: 0xbfc5cc, rough: 0.34, metal: 0.85 }   // alumínium
+  ];
+
+  return {
+    intro, spin,
+    setMaterial(i) {
+      const p = presets[i];
+      const c = new THREE.Color(p.color);
+      if (hasGsap) {
+        gsap.to(matSteps.color, { r: c.r, g: c.g, b: c.b, duration: 0.9, ease: 'power2.out' });
+        gsap.to(matSteps, { roughness: p.rough, metalness: p.metal, duration: 0.9 });
+        gsap.to(spin, { v: '+=1.45', duration: 1.5, ease: 'power3.out' });
+      } else {
+        matSteps.color.copy(c);
+        matSteps.roughness = p.rough;
+        matSteps.metalness = p.metal;
+      }
+    }
+  };
+}
+
+/* ============================================================
+   PRELOADER
+   ============================================================ */
+const preEl = $('#preloader'), pctEl = $('#pl-pct'), barEl = $('#pl-bar');
+let plPct = 0, plTarget = 12, plDone = false;
+const plTick = () => {
+  if (plDone) return;
+  plPct += (plTarget - plPct) * 0.07 + 0.12;
+  if (plPct > 100) plPct = 100;
+  pctEl.textContent = String(Math.floor(plPct)).padStart(3, '0');
+  barEl.style.transform = `scaleX(${plPct / 100})`;
+  if (plPct >= 99.6 && plTarget >= 100) { plDone = true; finishLoad(); return; }
+  requestAnimationFrame(plTick);
+};
+requestAnimationFrame(plTick);
+
+let sceneAPI = null;
+let finished = false;
+
+function finishLoad() {
+  if (finished) return;
+  finished = true;
+  preEl.dataset.done = '1';
+  preEl.classList.add('is-done');
+  setTimeout(() => { preEl.style.display = 'none'; }, 1100);
+  introSequence();
+}
+
+/* ============================================================
+   INTRO + SCROLL CHOREOGRAPHY
+   ============================================================ */
+function introSequence() {
+  if (!hasGsap) return;
+
+  const heroLines = $$('.hero .rl > span');
+  const heroFades = $$('.hero .fade-up');
+
+  const tl = gsap.timeline({ delay: 0.15 });
+  tl.to(heroLines, { y: 0, duration: 1.3, ease: 'power4.out', stagger: 0.13 })
+    .to(heroFades, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.1 }, '-=0.8');
+  if (sceneAPI) {
+    tl.to(sceneAPI.intro, { s: 1, r: 0, duration: 2.2, ease: 'power3.out' }, 0.1);
+  }
+
+  $$('.hero .scr').forEach(scramble);
+  setTimeout(() => { buildScrollFX(); ScrollTrigger.refresh(); }, 120);
+}
+
+function buildScrollFX() {
+  /* generic reveals (everything outside the hero) */
+  const lines = $$('.rl > span').filter(el => !el.closest('.hero'));
+  ScrollTrigger.batch(lines, {
+    start: 'top 88%',
+    onEnter: els => gsap.to(els, { y: 0, duration: 1.15, ease: 'power4.out', stagger: 0.09, overwrite: true })
+  });
+  const fades = $$('.fade-up').filter(el => !el.closest('.hero'));
+  ScrollTrigger.batch(fades, {
+    start: 'top 90%',
+    onEnter: els => gsap.to(els, { opacity: 1, y: 0, duration: 1, ease: 'power3.out', stagger: 0.08, overwrite: true })
+  });
+  $$('.shead__rule').forEach(el => {
+    gsap.to(el, { scaleX: 1, duration: 1.4, ease: 'power3.inOut',
+      scrollTrigger: { trigger: el, start: 'top 90%' } });
+  });
+
+  /* scramble + counters */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      if (en.target.matches('.scr')) scramble(en.target);
+    });
+  }, { threshold: 0.4 });
+  $$('.scr').filter(el => !el.closest('.hero')).forEach(el => io.observe(el));
+
+  $$('[data-count]').forEach(el => {
+    const end = +el.dataset.count;
+    gsap.fromTo(el, { textContent: 0 }, {
+      textContent: end, duration: 1.8, ease: 'power2.out',
+      snap: { textContent: 1 },
+      scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+
+  /* hero content parallax-out */
+  gsap.to('.hero .container', {
+    y: -70, opacity: 0.25, ease: 'none',
+    scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
+  });
+
+  /* ----- 3D camera journey (tweens the shared `view` object) ----- */
+  const leg = (trig, vars) => gsap.to(view, {
+    ...vars, ease: 'none', immediateRender: false,
+    scrollTrigger: { trigger: trig, start: 'top bottom', end: 'top top', scrub: 1 }
+  });
+  leg('#bemutatkozas',  { camX: -3.8, camY: 3.6, camZ: 8.6, gX: 2.2,  gRot: 1.3 });
+  leg('#szolgaltatasok',{ camX: -1.5, camY: 1.9, camZ: 9.6, gX: -2.3, gRot: 2.5 });
+  leg('#anyagok',       { camX: 0.4,  camY: 2.3, camZ: 8.2, gX: 2.25, gRot: 3.6 });
+  leg('#folyamat',      { camX: 0,    camY: 2.7, camZ: 10.6, gX: 1.4, gRot: 4.6, explodeT: 1 });
+
+  /* dim the canvas behind the service list, brighten for materials */
+  gsap.to('#gl', { opacity: 0.4, ease: 'none', immediateRender: false,
+    scrollTrigger: { trigger: '#szolgaltatasok', start: 'top 75%', end: 'top 15%', scrub: true } });
+  gsap.to('#gl', { opacity: 1, ease: 'none', immediateRender: false,
+    scrollTrigger: { trigger: '#anyagok', start: 'top 95%', end: 'top 35%', scrub: true } });
+
+  /* ----- FOLYAMAT: pinned — the staircase assembles itself ----- */
+  const psteps = $$('.pstep');
+  const plabels = $$('#prail-labels span');
+  const pnum = $('#pnum');
+  const pbar = $('.prail__bar i');
+  let curStep = 0;
+
+  const setStep = i => {
+    if (i === curStep) return;
+    curStep = i;
+    psteps.forEach((el, k) => el.classList.toggle('is-active', k === i));
+    plabels.forEach((el, k) => el.classList.toggle('is-active', k === i));
+    pnum.textContent = '0' + (i + 1);
+    gsap.fromTo(pnum, { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' });
+  };
+
+  ScrollTrigger.create({
+    trigger: '#folyamat', start: 'top top', end: '+=340%',
+    pin: true,
+    onUpdate: self => {
+      setStep(Math.min(3, Math.floor(self.progress * 4)));
+      pbar.style.transform = `scaleX(${self.progress})`;
+      /* drive the assembly straight from pin progress — the renderer smooths it */
+      view.explodeT = 1 - self.progress;
+      view.gRotPin = self.progress * 2.1;
+    }
+  });
+
+  /* ----- REFERENCIÁK: pinned horizontal gallery ----- */
+  const track = $('#ref-track');
+  const dist = () => Math.max(0, track.scrollWidth - innerWidth + 80);
+  gsap.to(track, {
+    x: () => -dist(), ease: 'none',
+    scrollTrigger: {
+      trigger: '#referenciak', start: 'top top',
+      end: () => '+=' + (dist() + 200),
+      pin: true, scrub: 1, invalidateOnRefresh: true
+    }
+  });
+
+  /* header hide/show */
+  let lastY = 0;
+  ScrollTrigger.create({
+    start: 0, end: 'max',
+    onUpdate: self => {
+      const y = self.scroll();
+      $('#hdr').classList.toggle('is-hidden', y > lastY && y > 250 && !$('#menu').classList.contains('is-open'));
+      lastY = y;
+    }
+  });
+}
+
+/* ============================================================
+   TEXT SCRAMBLE
+   ============================================================ */
+function scramble(el) {
+  if (reduced) return;
+  const original = el.dataset.txt || (el.dataset.txt = el.textContent);
+  const glyphs = '█▓▒░<>/\\—×01';
+  const dur = 700, t0 = performance.now();
+  (function run(now) {
+    const p = clamp((now - t0) / dur, 0, 1);
+    const cut = Math.floor(original.length * p);
+    el.textContent = original.slice(0, cut) + [...original.slice(cut)]
+      .map(ch => ch === ' ' ? ' ' : glyphs[(Math.random() * glyphs.length) | 0]).join('');
+    if (p < 1) requestAnimationFrame(run);
+    else el.textContent = original;
+  })(t0);
+}
+
+/* ============================================================
+   INTERACTIONS
+   ============================================================ */
+/* custom cursor */
+if (!touch) {
+  const dot = $('.cur-dot'), ringEl = $('.cur-ring'), ringTxt = $('.cur-ring span');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
+  (function curLoop() {
+    rx += (mx - rx) * 0.16;
+    ry += (my - ry) * 0.16;
+    dot.style.transform = `translate(${mx - 3}px, ${my - 3}px)`;
+    ringEl.style.left = rx + 'px';
+    ringEl.style.top = ry + 'px';
+    requestAnimationFrame(curLoop);
+  })();
+  document.addEventListener('mouseover', e => {
+    const label = e.target.closest('[data-cursor]');
+    const hov = e.target.closest('a, button, .svc-row');
+    ringEl.classList.toggle('is-label', !!label);
+    ringEl.classList.toggle('is-hover', !!hov && !label);
+    ringTxt.textContent = label ? label.dataset.cursor : '';
+  });
+}
+
+/* magnetic buttons */
+if (!touch && hasGsap) {
+  $$('.btn').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      gsap.to(btn, {
+        x: (e.clientX - r.left - r.width / 2) * 0.25,
+        y: (e.clientY - r.top - r.height / 2) * 0.35,
+        duration: 0.4, ease: 'power3.out'
+      });
+    });
+    btn.addEventListener('mouseleave', () =>
+      gsap.to(btn, { x: 0, y: 0, duration: 0.7, ease: 'elastic.out(1, 0.4)' }));
+  });
+}
+
+/* service rows — floating preview */
+if (!touch) {
+  const pv = $('#pv'), pvNum = $('#pv-num');
+  const arts = $$('.pv__art', pv);
+  const list = $('#svc-list');
+  let pvX = 0, pvY = 0, tX = 0, tY = 0, pvOn = false;
+  list.addEventListener('mousemove', e => {
+    tX = clamp(e.clientX + 36, 8, innerWidth - 310);
+    tY = clamp(e.clientY - 190, 8, innerHeight - 385);
+  });
+  (function pvLoop() {
+    pvX += (tX - pvX) * 0.12;
+    pvY += (tY - pvY) * 0.12;
+    if (pvOn) pv.style.transform = `translate(${pvX}px, ${pvY}px) scale(1)`;
+    requestAnimationFrame(pvLoop);
+  })();
+  $$('.svc-row').forEach(row => {
+    row.addEventListener('mouseenter', () => {
+      const i = +row.dataset.art;
+      arts.forEach((a, k) => a.classList.toggle('is-active', k === i));
+      pvNum.textContent = '0' + (i + 1);
+      pvOn = true;
+      pv.classList.add('is-on');
+    });
+  });
+  list.addEventListener('mouseleave', () => { pvOn = false; pv.classList.remove('is-on'); });
+}
+
+/* materials switcher */
+$$('.mat-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const i = +tab.dataset.mat;
+    $$('.mat-tab').forEach((t, k) => {
+      t.classList.toggle('is-active', k === i);
+      t.setAttribute('aria-selected', k === i);
+    });
+    $$('.mat-info').forEach((m, k) => m.classList.toggle('is-active', k === i));
+    if (sceneAPI) sceneAPI.setMaterial(i);
+  });
+});
+
+/* mobile menu */
+const burger = $('#burger'), menu = $('#menu');
+burger.addEventListener('click', () => {
+  const open = menu.classList.toggle('is-open');
+  burger.classList.toggle('is-open', open);
+  burger.setAttribute('aria-expanded', open);
+  if (lenis) open ? lenis.stop() : lenis.start();
+});
+
+/* anchor smooth scroll */
+$$('a[data-scroll]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (!id.startsWith('#')) return;
+    const target = $(id);
+    if (!target) return;
+    e.preventDefault();
+    if (menu.classList.contains('is-open')) {
+      menu.classList.remove('is-open');
+      burger.classList.remove('is-open');
+      burger.setAttribute('aria-expanded', 'false');
+      if (lenis) lenis.start();
+    }
+    if (lenis) lenis.scrollTo(target, { duration: 1.6 });
+    else target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  });
+});
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+(async () => {
+  const minDelay = new Promise(r => setTimeout(r, 1500));
+  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+  plTarget = 60;
+  sceneAPI = await initScene().catch(() => null);
+  plTarget = 88;
+  await Promise.race([
+    Promise.allSettled([minDelay, fonts]),
+    new Promise(r => setTimeout(r, 4500))
+  ]);
+  plTarget = 100;
+  if (!hasGsap) finishLoad(); /* counter loop calls finishLoad when it hits 100 otherwise */
+})();
+</script>
+</body>
+</html>
