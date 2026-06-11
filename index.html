@@ -203,37 +203,37 @@ setTimeout(function(){var p=document.getElementById('preloader');if(p&&!p.datase
       </h2>
 
       <ul class="svc-list" id="svc-list">
-        <li class="svc-row" data-art="0">
+        <li class="svc-row svc-row--link" data-art="0" data-link="galeria.html?k=lepcsok" data-cursor="GALÉRIA">
           <span class="svc-row__idx mono">/ 01</span>
           <h3 class="svc-row__name d">Lépcsők</h3>
           <p class="svc-row__desc">Beltéri és kültéri lépcsők acélból és rozsdamentesből</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row" data-art="1">
+        <li class="svc-row svc-row--link" data-art="1" data-link="galeria.html?k=korlatok" data-cursor="GALÉRIA">
           <span class="svc-row__idx mono">/ 02</span>
           <h3 class="svc-row__name d">Korlátok</h3>
           <p class="svc-row__desc">Erkély-, terasz- és lépcsőkorlátok, üvegbetéttel is</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row" data-art="2">
+        <li class="svc-row svc-row--link" data-art="2" data-link="galeria.html?k=kapuk" data-cursor="GALÉRIA">
           <span class="svc-row__idx mono">/ 03</span>
           <h3 class="svc-row__name d">Kapuk</h3>
           <p class="svc-row__desc">Toló-, úszó- és kétszárnyú kapuk, kapumozgatással</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row" data-art="3">
+        <li class="svc-row svc-row--link" data-art="3" data-link="galeria.html?k=kapuk" data-cursor="GALÉRIA">
           <span class="svc-row__idx mono">/ 04</span>
           <h3 class="svc-row__name d">Kerítések</h3>
           <p class="svc-row__desc">2D és 3D táblás rendszerek, egyedi kerítésmezők</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row" data-art="4">
+        <li class="svc-row svc-row--link" data-art="4" data-link="galeria.html?k=tetok" data-cursor="GALÉRIA">
           <span class="svc-row__idx mono">/ 05</span>
           <h3 class="svc-row__name d">Előtetők</h3>
           <p class="svc-row__desc">Előtetők, kocsibeállók, teraszfedések</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row" data-art="5">
+        <li class="svc-row svc-row--link" data-art="5" data-link="galeria.html?k=acel" data-cursor="GALÉRIA">
           <span class="svc-row__idx mono">/ 06</span>
           <h3 class="svc-row__name d">Acélszerkezetek</h3>
           <p class="svc-row__desc">Csarnokok, ipari épületek, tartószerkezetek</p>
@@ -257,12 +257,12 @@ setTimeout(function(){var p=document.getElementById('preloader');if(p&&!p.datase
 
   <!-- floating service preview -->
   <div class="pv" id="pv" aria-hidden="true">
-    <div class="pv__art art art--steps"></div>
-    <div class="pv__art art art--rails"></div>
-    <div class="pv__art art art--gates"></div>
-    <div class="pv__art art art--fence"></div>
-    <div class="pv__art art art--canopy"></div>
-    <div class="pv__art art art--ind"></div>
+    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vaslepcso2.jpg')"></div>
+    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/ruk5.jpg')"></div>
+    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vaskapu2.jpg')"></div>
+    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/ake.jpg')"></div>
+    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vastetok1.jpg')"></div>
+    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vasegyeb1.jpg')"></div>
     <div class="pv__art art art--furn"></div>
     <div class="pv__art art art--batch"></div>
     <span class="pv__num d" id="pv-num">01</span>
@@ -1140,6 +1140,10 @@ if (!touch) {
   });
   list.addEventListener('mouseleave', () => { pvOn = false; pv.classList.remove('is-on'); });
 }
+
+/* service rows -> gallery pages */
+$$('.svc-row[data-link]').forEach(row =>
+  row.addEventListener('click', () => { location.href = row.dataset.link; }));
 
 /* materials switcher */
 $$('.mat-tab').forEach(tab => {

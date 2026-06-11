@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Galéria — GFA Mohács Kft. | Referenciák</title>
+<meta name="description" content="GFA Mohács Kft. referencia galéria — lépcsők, korlátok, kapuk, kerítések, tetők és acélszerkezetek fotói.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23ff4d00'/%3E%3Ctext x='32' y='44' font-family='Arial Black,sans-serif' font-size='34' font-weight='900' text-anchor='middle' fill='%23fff'%3EG%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62.5..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="gpage">
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- custom cursor -->
+<div class="cur-dot" aria-hidden="true"></div>
+<div class="cur-ring" aria-hidden="true"><span></span></div>
+
+<!-- header -->
+<header class="hdr">
+  <a class="hdr__logo" href="index.html">GFA<sup>®</sup></a>
+  <nav class="hdr__nav" aria-label="Navigáció">
+    <a href="index.html#szolgaltatasok">← Vissza a főoldalra</a>
+  </nav>
+  <a class="hdr__cta" href="index.html#kapcsolat">Ajánlatkérés</a>
+</header>
+
+<!-- the infinite grid -->
+<div class="gwrap" id="gwrap" data-cursor="HÚZD">
+  <div class="ggrid" id="ggrid"></div>
+</div>
+
+<!-- title overlay -->
+<div class="goverlay" aria-hidden="true">
+  <p class="goverlay__kicker mono" id="g-kicker">Referencia galéria</p>
+  <h1 class="goverlay__title d" id="g-title"></h1>
+  <p class="goverlay__sub mono" id="g-sub"></p>
+</div>
+
+<p class="ghint mono" aria-hidden="true">Húzd a rácsot bármerre — kattints a képre</p>
+
+<!-- category switcher -->
+<nav class="gchips" id="gchips" aria-label="Galéria kategóriák"></nav>
+
+<!-- fullscreen viewer (same lightbox system as the main page) -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Kép megtekintése" aria-hidden="true">
+  <header class="lb__head">
+    <span class="lb__title mono" id="lb-title"></span>
+    <span class="lb__count mono" id="lb-count">01 — 01</span>
+    <button class="lb__close" id="lb-close" aria-label="Bezárás">×</button>
+  </header>
+  <div class="lb__stage" id="lb-stage">
+    <img class="lb__img" id="lb-img" src="" alt="" draggable="false">
+  </div>
+  <button class="lb__nav lb__nav--prev" id="lb-prev" aria-label="Előző kép">←</button>
+  <button class="lb__nav lb__nav--next" id="lb-next" aria-label="Következő kép">→</button>
+  <p class="lb__hint mono" aria-hidden="true">← → billentyűk · ESC bezár</p>
+</div>
+
+<noscript><p style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;font-family:monospace;color:#c9cdd3;background:#0b0c0e;z-index:999">A galériához JavaScript szükséges.</p></noscript>
+
+<script type="module">
+/* ============================================================
+   GFA — infinite draggable reference grid (phantom.land-style)
+   ============================================================ */
+const $ = (s, c = document) => c.querySelector(s);
+const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
+const rnd = n => { const x = Math.sin(n * 127.1 + 13.7) * 43758.5453; return x - Math.floor(x); };
+
+const seq = (p, n) => Array.from({ length: n }, (_, i) => `assets/refs/${p}${i + 1}.jpg`);
+const GALLERIES = {
+  korlatok: {
+    title: 'Korlátok', sub: 'Rozsdamentes · üveg · acél · alumínium',
+    imgs: [...seq('rk', 23), ...seq('ruk', 29), ...seq('uk', 20), ...seq('vaskorlat', 5),
+           'assets/refs/rkapasz.jpg', 'assets/refs/alukorlat1.jpg']
+  },
+  kapuk: {
+    title: 'Kapuk & kerítések', sub: 'Acél · kovácsoltvas · alumínium',
+    imgs: [...seq('vaskapu', 7), 'assets/refs/vaskapuk1.jpg', ...seq('kovacsoltvas', 3),
+           'assets/refs/kovvas.jpg', 'assets/refs/kv.jpg', 'assets/refs/ake.jpg']
+  },
+  lepcsok: {
+    title: 'Lépcsők', sub: 'Acél · ipari és lakossági',
+    imgs: seq('vaslepcso', 4)
+  },
+  tetok: {
+    title: 'Tetők & előtetők', sub: 'Acél · rozsdamentes',
+    imgs: [...seq('vastetok', 3), 'assets/refs/rozsdamentestetok.jpg']
+  },
+  acel: {
+    title: 'Acélszerkezetek', sub: 'Egyedi vasszerkezetek',
+    imgs: seq('vasegyeb', 4)
+  }
+};
+const CHIP_LABELS = { korlatok: 'Korlátok', kapuk: 'Kapuk & kerítések', lepcsok: 'Lépcsők', tetok: 'Tetők', acel: 'Acélszerkezetek' };
+
+let key = new URLSearchParams(location.search).get('k');
+if (!GALLERIES[key]) key = 'korlatok';
+
+/* ---------- grid engine ---------- */
+const wrap = $('#gwrap'), grid = $('#ggrid');
+let tiles = [], blockW = 0, blockH = 0;
+let offX = 0, offY = 0, velX = 0, velY = 0;
+let dragging = false, lastX = 0, lastY = 0, movedDist = 0;
+let gridScale = 1, idleT = 0;
+let curImgs = [];
+
+function build(k) {
+  key = k;
+  const gal = GALLERIES[k];
+  curImgs = gal.imgs;
+
+  /* overlay + chips + url */
+  $('#g-title').textContent = gal.title;
+  $('#g-sub').textContent = gal.sub;
+  $('#g-kicker').textContent = `Referencia galéria — ${gal.imgs.length} fotó`;
+  $$('.gchip').forEach(c => c.classList.toggle('is-active', c.dataset.k === k));
+  history.replaceState(null, '', '?k=' + k);
+  document.title = `${gal.title} — Galéria | GFA Mohács Kft.`;
+
+  /* tile sizing — responsive cell */
+  const CW = clamp(innerWidth * 0.36, 230, 430);
+  const CH = CW * 1.26;
+
+  /* repeat the image list until one block tile comfortably exceeds the viewport */
+  let list = [...gal.imgs], cols, rows;
+  for (let guard = 0; guard < 12; guard++) {
+    cols = Math.ceil(Math.sqrt(list.length * 1.45));
+    rows = Math.ceil(list.length / cols);
+    if (cols * CW >= innerWidth + 2.4 * CW && rows * CH >= innerHeight + 2.4 * CH) break;
+    list = list.concat(gal.imgs);
+  }
+  blockW = cols * CW;
+  blockH = rows * CH;
+
+  /* build DOM */
+  grid.innerHTML = '';
+  grid.classList.remove('is-ready');
+  tiles = list.map((src, i) => {
+    const col = i % cols, row = (i / cols) | 0;
+    /* deterministic jitter + 3 frame variants for an organic, phantom-like scatter */
+    const v = rnd(i * 3 + 1);
+    const w = v < 0.36 ? CW * 0.56 : v < 0.74 ? CW * 0.68 : CW * 0.82;
+    const h = v < 0.36 ? w * 1.32 : v < 0.74 ? w * 0.74 : w * 1.0;
+    const bx = col * CW + (rnd(i * 7 + 2) - 0.5) * CW * 0.34;
+    const by = row * CH + (rnd(i * 11 + 5) - 0.5) * CH * 0.3;
+
+    const fig = document.createElement('figure');
+    fig.className = 'gt';
+    fig.style.width = w + 'px';
+    fig.style.height = h + 'px';
+    fig.style.transitionDelay = Math.min(i * 18, 900) + 'ms';
+    fig.dataset.i = i % gal.imgs.length;
+    fig.dataset.cursor = 'MEGNÉZ';
+    const img = document.createElement('img');
+    img.src = src;
+    img.loading = 'lazy';
+    img.draggable = false;
+    img.alt = gal.title + ' — referencia fotó';
+    const cap = document.createElement('figcaption');
+    cap.className = 'mono';
+    cap.textContent = 'R—' + String((i % gal.imgs.length) + 1).padStart(2, '0');
+    fig.append(img, cap);
+    grid.appendChild(fig);
+    return { el: fig, bx, by, w, h };
+  });
+
+  requestAnimationFrame(() => requestAnimationFrame(() => grid.classList.add('is-ready')));
+  layout();
+}
+
+/* wrapped positioning — each tile lives at exactly one spot, wrapped modulo the block */
+function layout() {
+  const mW = blockW, mH = blockH;
+  for (const t of tiles) {
+    const x = (((t.bx + offX) % mW) + mW) % mW - t.w - 60;
+    const y = (((t.by + offY) % mH) + mH) % mH - t.h - 60;
+    t.el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+  }
+}
+
+/* ---------- physics loop ---------- */
+let lastT = performance.now();
+function loop(now) {
+  requestAnimationFrame(loop);
+  const dt = Math.min((now - lastT) / 1000, 0.05);
+  lastT = now;
+
+  if (!dragging) {
+    offX += velX * dt;
+    offY += velY * dt;
+    velX *= Math.pow(0.0028, dt);   /* exponential friction, framerate-independent */
+    velY *= Math.pow(0.0028, dt);
+    if (Math.abs(velX) < 2) velX = 0;
+    if (Math.abs(velY) < 2) velY = 0;
+
+    /* gentle idle drift, phantom-style */
+    idleT += dt;
+    if (idleT > 2.5 && !reduced) { offX -= 9 * dt; offY -= 5 * dt; }
+  }
+
+  /* speed-based zoom-out of the whole grid */
+  const spd = Math.hypot(velX, velY) + (dragging ? 420 : 0);
+  const target = clamp(1 - spd * 0.00009, 0.88, 1);
+  gridScale += (target - gridScale) * Math.min(1, dt * 6);
+  grid.style.transform = `scale(${gridScale.toFixed(4)})`;
+
+  layout();
+}
+requestAnimationFrame(loop);
+
+/* ---------- input: drag / throw / wheel ---------- */
+wrap.addEventListener('pointerdown', e => {
+  dragging = true;
+  movedDist = 0;
+  lastX = e.clientX; lastY = e.clientY;
+  velX = velY = 0;
+  wrap.setPointerCapture(e.pointerId);
+  wrap.classList.add('is-grab');
+});
+wrap.addEventListener('pointermove', e => {
+  if (!dragging) return;
+  const dx = e.clientX - lastX, dy = e.clientY - lastY;
+  lastX = e.clientX; lastY = e.clientY;
+  offX += dx; offY += dy;
+  movedDist += Math.abs(dx) + Math.abs(dy);
+  /* velocity estimate for the throw */
+  velX = velX * 0.75 + dx * 60 * 0.25;
+  velY = velY * 0.75 + dy * 60 * 0.25;
+  idleT = 0;
+});
+function endDrag(e) {
+  if (!dragging) return;
+  dragging = false;
+  wrap.classList.remove('is-grab');
+  idleT = 0;
+  /* tap (not drag) on a tile → open the viewer */
+  if (movedDist < 8) {
+    const tile = e.target.closest('.gt');
+    if (tile) lbOpen(+tile.dataset.i);
+  }
+}
+wrap.addEventListener('pointerup', endDrag);
+wrap.addEventListener('pointercancel', endDrag);
+wrap.addEventListener('wheel', e => {
+  e.preventDefault();
+  offX -= e.deltaX;
+  offY -= e.deltaY;
+  velX = velX * 0.8 - e.deltaX * 6 * 0.2;
+  velY = velY * 0.8 - e.deltaY * 6 * 0.2;
+  idleT = 0;
+}, { passive: false });
+
+addEventListener('resize', () => { clearTimeout(window.__grb); window.__grb = setTimeout(() => build(key), 200); });
+
+/* ---------- category chips ---------- */
+const chips = $('#gchips');
+Object.keys(GALLERIES).forEach(k => {
+  const b = document.createElement('button');
+  b.className = 'gchip mono' + (k === key ? ' is-active' : '');
+  b.dataset.k = k;
+  b.textContent = CHIP_LABELS[k];
+  b.addEventListener('click', () => { if (k !== key) { offX = offY = velX = velY = 0; build(k); } });
+  chips.appendChild(b);
+});
+
+/* ---------- fullscreen viewer ---------- */
+const lb = $('#lb'), lbImg = $('#lb-img'), lbCount = $('#lb-count');
+let lbIdx = 0, lbBusy = false;
+
+function lbShow(i, dir) {
+  lbIdx = (i + curImgs.length) % curImgs.length;
+  lbCount.textContent = String(lbIdx + 1).padStart(2, '0') + ' — ' + String(curImgs.length).padStart(2, '0');
+  const src = curImgs[lbIdx];
+  lbBusy = true;
+  lbImg.style.transition = 'opacity .2s, transform .2s';
+  if (dir) { lbImg.style.opacity = 0; lbImg.style.transform = `translateX(${dir * -30}px)`; }
+  const pre = new Image();
+  pre.onload = pre.onerror = () => {
+    lbImg.src = src;
+    lbImg.alt = GALLERIES[key].title + ' — ' + (lbIdx + 1) + '. kép';
+    lbImg.style.transition = 'opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1)';
+    lbImg.style.transform = `translateX(${(dir || 0) * 30}px)`;
+    requestAnimationFrame(() => { lbImg.style.opacity = 1; lbImg.style.transform = 'translateX(0)'; lbBusy = false; });
+  };
+  pre.src = src;
+  [1, -1].forEach(k2 => { const im = new Image(); im.src = curImgs[(lbIdx + k2 + curImgs.length) % curImgs.length]; });
+}
+function lbOpen(i) {
+  $('#lb-title').textContent = GALLERIES[key].title;
+  lb.classList.add('is-open');
+  lb.setAttribute('aria-hidden', 'false');
+  lbImg.src = '';
+  lbShow(i, 0);
+}
+function lbClose() { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); }
+
+$('#lb-close').addEventListener('click', lbClose);
+$('#lb-prev').addEventListener('click', () => !lbBusy && lbShow(lbIdx - 1, -1));
+$('#lb-next').addEventListener('click', () => !lbBusy && lbShow(lbIdx + 1, 1));
+$('#lb-stage').addEventListener('click', e => { if (e.target === e.currentTarget) lbClose(); });
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('is-open')) return;
+  if (e.key === 'Escape') lbClose();
+  else if (e.key === 'ArrowRight' && !lbBusy) lbShow(lbIdx + 1, 1);
+  else if (e.key === 'ArrowLeft' && !lbBusy) lbShow(lbIdx - 1, -1);
+});
+let lbTX = null;
+lb.addEventListener('pointerdown', e => { lbTX = e.clientX; });
+lb.addEventListener('pointerup', e => {
+  if (lbTX === null || lbBusy) return;
+  const dx = e.clientX - lbTX; lbTX = null;
+  if (Math.abs(dx) > 60) lbShow(lbIdx + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+});
+
+/* ---------- custom cursor (same system as the main page) ---------- */
+if (!touch) {
+  const dot = $('.cur-dot'), ring = $('.cur-ring'), ringTxt = $('.cur-ring span');
+  let mx = -100, my = -100, rx = -100, ry = -100;
+  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; });
+  (function cl() {
+    rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+    dot.style.transform = `translate(${mx - 3}px, ${my - 3}px)`;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(cl);
+  })();
+  document.addEventListener('mouseover', e => {
+    const label = e.target.closest('[data-cursor]');
+    const hov = e.target.closest('a, button');
+    ring.classList.toggle('is-label', !!label);
+    ring.classList.toggle('is-hover', !!hov && !label);
+    ringTxt.textContent = label ? label.dataset.cursor : '';
+  });
+}
+
+/* ---------- boot ---------- */
+build(key);
+</script>
+</body>
+</html>
