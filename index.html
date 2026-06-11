@@ -203,37 +203,37 @@ setTimeout(function(){var p=document.getElementById('preloader');if(p&&!p.datase
       </h2>
 
       <ul class="svc-list" id="svc-list">
-        <li class="svc-row svc-row--link" data-art="0" data-link="galeria.html?k=lepcsok" data-cursor="GALÉRIA">
+        <li class="svc-row" data-art="0">
           <span class="svc-row__idx mono">/ 01</span>
           <h3 class="svc-row__name d">Lépcsők</h3>
           <p class="svc-row__desc">Beltéri és kültéri lépcsők acélból és rozsdamentesből</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row svc-row--link" data-art="1" data-link="galeria.html?k=korlatok" data-cursor="GALÉRIA">
+        <li class="svc-row" data-art="1">
           <span class="svc-row__idx mono">/ 02</span>
           <h3 class="svc-row__name d">Korlátok</h3>
           <p class="svc-row__desc">Erkély-, terasz- és lépcsőkorlátok, üvegbetéttel is</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row svc-row--link" data-art="2" data-link="galeria.html?k=kapuk" data-cursor="GALÉRIA">
+        <li class="svc-row" data-art="2">
           <span class="svc-row__idx mono">/ 03</span>
           <h3 class="svc-row__name d">Kapuk</h3>
           <p class="svc-row__desc">Toló-, úszó- és kétszárnyú kapuk, kapumozgatással</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row svc-row--link" data-art="3" data-link="galeria.html?k=kapuk" data-cursor="GALÉRIA">
+        <li class="svc-row" data-art="3">
           <span class="svc-row__idx mono">/ 04</span>
           <h3 class="svc-row__name d">Kerítések</h3>
           <p class="svc-row__desc">2D és 3D táblás rendszerek, egyedi kerítésmezők</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row svc-row--link" data-art="4" data-link="galeria.html?k=tetok" data-cursor="GALÉRIA">
+        <li class="svc-row" data-art="4">
           <span class="svc-row__idx mono">/ 05</span>
           <h3 class="svc-row__name d">Előtetők</h3>
           <p class="svc-row__desc">Előtetők, kocsibeállók, teraszfedések</p>
           <span class="svc-row__arrow">↗</span>
         </li>
-        <li class="svc-row svc-row--link" data-art="5" data-link="galeria.html?k=acel" data-cursor="GALÉRIA">
+        <li class="svc-row" data-art="5">
           <span class="svc-row__idx mono">/ 06</span>
           <h3 class="svc-row__name d">Acélszerkezetek</h3>
           <p class="svc-row__desc">Csarnokok, ipari épületek, tartószerkezetek</p>
@@ -257,12 +257,12 @@ setTimeout(function(){var p=document.getElementById('preloader');if(p&&!p.datase
 
   <!-- floating service preview -->
   <div class="pv" id="pv" aria-hidden="true">
-    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vaslepcso2.jpg')"></div>
-    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/ruk5.jpg')"></div>
-    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vaskapu2.jpg')"></div>
-    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/ake.jpg')"></div>
-    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vastetok1.jpg')"></div>
-    <div class="pv__art pv__art--photo" style="background-image:url('assets/refs/vasegyeb1.jpg')"></div>
+    <div class="pv__art art art--steps"></div>
+    <div class="pv__art art art--rails"></div>
+    <div class="pv__art art art--gates"></div>
+    <div class="pv__art art art--fence"></div>
+    <div class="pv__art art art--canopy"></div>
+    <div class="pv__art art art--ind"></div>
     <div class="pv__art art art--furn"></div>
     <div class="pv__art art art--batch"></div>
     <span class="pv__num d" id="pv-num">01</span>
@@ -388,118 +388,74 @@ setTimeout(function(){var p=document.getElementById('preloader');if(p&&!p.datase
         <span class="rl"><span>Munkák, amikre</span></span>
         <span class="rl"><span>büszkék vagyunk.</span></span>
       </h2>
-      <p class="refs__hint mono">Görgess tovább — kattints egy kategóriára a teljes galériáért →</p>
+      <p class="refs__hint mono">Görgess tovább — a sor veled mozog →</p>
     </div>
 
     <div class="ref-track" id="ref-track">
-      <figure class="ref-card" data-cat="0" data-cursor="GALÉRIA">
+      <figure class="ref-card" data-cursor="MEGNÉZ">
         <div class="ref-card__img">
-          <img src="assets/refs/rozsdamentesk.jpg" alt="Rozsdamentes korlátok — referenciák" loading="lazy">
+          <div class="art art--steps"></div>
           <span class="ref-card__idx mono">R—01</span>
           <span class="ref-card__tag mono">Rozsdamentes</span>
         </div>
         <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Rozsdamentes korlátok</span>
-          <span class="ref-card__loc mono">23 fotó</span>
+          <span class="ref-card__name">Lebegő lépcső</span>
+          <span class="ref-card__loc mono">Családi ház · Pécs</span>
         </figcaption>
       </figure>
-      <figure class="ref-card" data-cat="1" data-cursor="GALÉRIA">
+      <figure class="ref-card" data-cursor="MEGNÉZ">
         <div class="ref-card__img">
-          <img src="assets/refs/rozsdamenteskub.jpg" alt="Rozsdamentes üvegkorlátok — referenciák" loading="lazy">
+          <div class="art art--rails"></div>
           <span class="ref-card__idx mono">R—02</span>
-          <span class="ref-card__tag mono">Inox + üveg</span>
+          <span class="ref-card__tag mono">Üveg + inox</span>
         </div>
         <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Rozsdamentes üvegkorlátok</span>
-          <span class="ref-card__loc mono">29 fotó</span>
+          <span class="ref-card__name">Panoráma üvegkorlát</span>
+          <span class="ref-card__loc mono">Penthouse · Budapest</span>
         </figcaption>
       </figure>
-      <figure class="ref-card" data-cat="2" data-cursor="GALÉRIA">
+      <figure class="ref-card" data-cursor="MEGNÉZ">
         <div class="ref-card__img">
-          <img src="assets/refs/uk1.jpg" alt="Üvegkorlátok — referenciák" loading="lazy">
+          <div class="art art--gates"></div>
           <span class="ref-card__idx mono">R—03</span>
-          <span class="ref-card__tag mono">Üveg</span>
+          <span class="ref-card__tag mono">Acél</span>
         </div>
         <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Üvegkorlátok</span>
-          <span class="ref-card__loc mono">20 fotó</span>
+          <span class="ref-card__name">Úszókapu — 12 m</span>
+          <span class="ref-card__loc mono">Ipari telephely · Mohács</span>
         </figcaption>
       </figure>
-      <figure class="ref-card" data-cat="3" data-cursor="GALÉRIA">
+      <figure class="ref-card" data-cursor="MEGNÉZ">
         <div class="ref-card__img">
-          <img src="assets/refs/vaskapuk.jpg" alt="Vaskapuk — referenciák" loading="lazy">
+          <div class="art art--fence"></div>
           <span class="ref-card__idx mono">R—04</span>
-          <span class="ref-card__tag mono">Acél</span>
+          <span class="ref-card__tag mono">Horganyzott</span>
         </div>
         <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Vaskapuk</span>
-          <span class="ref-card__loc mono">8 fotó</span>
+          <span class="ref-card__name">3D kerítésrendszer</span>
+          <span class="ref-card__loc mono">Logisztikai központ · Baja</span>
         </figcaption>
       </figure>
-      <figure class="ref-card" data-cat="4" data-cursor="GALÉRIA">
+      <figure class="ref-card" data-cursor="MEGNÉZ">
         <div class="ref-card__img">
-          <img src="assets/refs/vaskorlat.jpg" alt="Vaskorlátok — referenciák" loading="lazy">
+          <div class="art art--canopy"></div>
           <span class="ref-card__idx mono">R—05</span>
-          <span class="ref-card__tag mono">Acél</span>
+          <span class="ref-card__tag mono">Alumínium</span>
         </div>
         <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Vaskorlátok</span>
-          <span class="ref-card__loc mono">5 fotó</span>
+          <span class="ref-card__name">Ipari előtető</span>
+          <span class="ref-card__loc mono">Társasház · Szekszárd</span>
         </figcaption>
       </figure>
-      <figure class="ref-card" data-cat="5" data-cursor="GALÉRIA">
+      <figure class="ref-card" data-cursor="MEGNÉZ">
         <div class="ref-card__img">
-          <img src="assets/refs/vaslepcso1.jpg" alt="Vaslépcsők — referenciák" loading="lazy">
+          <div class="art art--ind"></div>
           <span class="ref-card__idx mono">R—06</span>
-          <span class="ref-card__tag mono">Acél</span>
-        </div>
-        <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Vaslépcsők</span>
-          <span class="ref-card__loc mono">4 fotó</span>
-        </figcaption>
-      </figure>
-      <figure class="ref-card" data-cat="6" data-cursor="GALÉRIA">
-        <div class="ref-card__img">
-          <img src="assets/refs/vastetok1.jpg" alt="Vastetők — referenciák" loading="lazy">
-          <span class="ref-card__idx mono">R—07</span>
-          <span class="ref-card__tag mono">Acél</span>
-        </div>
-        <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Vastetők</span>
-          <span class="ref-card__loc mono">3 fotó</span>
-        </figcaption>
-      </figure>
-      <figure class="ref-card" data-cat="7" data-cursor="GALÉRIA">
-        <div class="ref-card__img">
-          <img src="assets/refs/kovvas.jpg" alt="Kovácsoltvas munkák — referenciák" loading="lazy">
-          <span class="ref-card__idx mono">R—08</span>
           <span class="ref-card__tag mono">Kovácsoltvas</span>
         </div>
         <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Kovácsoltvas</span>
-          <span class="ref-card__loc mono">5 fotó</span>
-        </figcaption>
-      </figure>
-      <figure class="ref-card" data-cat="8" data-cursor="GALÉRIA">
-        <div class="ref-card__img">
-          <img src="assets/refs/vasegyeb1.jpg" alt="Egyéb vasszerkezetek — referenciák" loading="lazy">
-          <span class="ref-card__idx mono">R—09</span>
-          <span class="ref-card__tag mono">Acél</span>
-        </div>
-        <figcaption class="ref-card__cap">
-          <span class="ref-card__name">Vasszerkezet egyéb</span>
-          <span class="ref-card__loc mono">4 fotó</span>
-        </figcaption>
-      </figure>
-      <figure class="ref-card" data-cat="9" data-cursor="GALÉRIA">
-        <div class="ref-card__img">
-          <img src="assets/refs/rozsdamentestetok.jpg" alt="További munkák — referenciák" loading="lazy">
-          <span class="ref-card__idx mono">R—10</span>
-          <span class="ref-card__tag mono">Vegyes</span>
-        </div>
-        <figcaption class="ref-card__cap">
-          <span class="ref-card__name">További munkák</span>
-          <span class="ref-card__loc mono">4 fotó</span>
+          <span class="ref-card__name">Kovácsolt nagykapu</span>
+          <span class="ref-card__loc mono">Birtok · Villány</span>
         </figcaption>
       </figure>
     </div>
@@ -545,21 +501,6 @@ setTimeout(function(){var p=document.getElementById('preloader');if(p&&!p.datase
   </section>
 
 </main>
-
-<!-- ===== Lightbox gallery ===== -->
-<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Referencia galéria" aria-hidden="true">
-  <header class="lb__head">
-    <span class="lb__title mono" id="lb-title"></span>
-    <span class="lb__count mono" id="lb-count">01 — 01</span>
-    <button class="lb__close" id="lb-close" aria-label="Galéria bezárása">×</button>
-  </header>
-  <div class="lb__stage" id="lb-stage">
-    <img class="lb__img" id="lb-img" src="" alt="" draggable="false">
-  </div>
-  <button class="lb__nav lb__nav--prev" id="lb-prev" aria-label="Előző kép">←</button>
-  <button class="lb__nav lb__nav--next" id="lb-next" aria-label="Következő kép">→</button>
-  <p class="lb__hint mono" aria-hidden="true">← → billentyűk · ESC bezár</p>
-</div>
 
 <!-- ===== Footer ===== -->
 <footer class="footer">
@@ -1141,10 +1082,6 @@ if (!touch) {
   list.addEventListener('mouseleave', () => { pvOn = false; pv.classList.remove('is-on'); });
 }
 
-/* service rows -> gallery pages */
-$$('.svc-row[data-link]').forEach(row =>
-  row.addEventListener('click', () => { location.href = row.dataset.link; }));
-
 /* materials switcher */
 $$('.mat-tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -1156,89 +1093,6 @@ $$('.mat-tab').forEach(tab => {
     $$('.mat-info').forEach((m, k) => m.classList.toggle('is-active', k === i));
     if (sceneAPI) sceneAPI.setMaterial(i);
   });
-});
-
-/* ============================================================
-   REFERENCE LIGHTBOX — real photo galleries from gfa.hu
-   ============================================================ */
-const seq = (p, n) => Array.from({ length: n }, (_, i) => `assets/refs/${p}${i + 1}.jpg`);
-const REF_DATA = [
-  { t: 'Rozsdamentes korlátok',      imgs: seq('rk', 23) },
-  { t: 'Rozsdamentes üvegkorlátok',  imgs: seq('ruk', 29) },
-  { t: 'Üvegkorlátok',               imgs: seq('uk', 20) },
-  { t: 'Vaskapuk',                   imgs: [...seq('vaskapu', 7), 'assets/refs/vaskapuk1.jpg'] },
-  { t: 'Vaskorlátok',                imgs: seq('vaskorlat', 5) },
-  { t: 'Vaslépcsők',                 imgs: seq('vaslepcso', 4) },
-  { t: 'Vastetők',                   imgs: seq('vastetok', 3) },
-  { t: 'Kovácsoltvas',               imgs: [...seq('kovacsoltvas', 3), 'assets/refs/kovvas.jpg', 'assets/refs/kv.jpg'] },
-  { t: 'Vasszerkezet egyéb',         imgs: seq('vasegyeb', 4) },
-  { t: 'További munkák',             imgs: ['assets/refs/rozsdamentestetok.jpg', 'assets/refs/rkapasz.jpg', 'assets/refs/alukorlat1.jpg', 'assets/refs/ake.jpg'] }
-];
-
-const lb = $('#lb'), lbImg = $('#lb-img'), lbTitle = $('#lb-title'), lbCount = $('#lb-count');
-let lbCat = 0, lbIdx = 0, lbBusy = false;
-
-function lbShow(i, dir) {
-  const d = REF_DATA[lbCat];
-  lbIdx = (i + d.imgs.length) % d.imgs.length;
-  lbCount.textContent = String(lbIdx + 1).padStart(2, '0') + ' — ' + String(d.imgs.length).padStart(2, '0');
-  const src = d.imgs[lbIdx];
-  const apply = () => {
-    lbImg.src = src;
-    lbImg.alt = d.t + ' — ' + (lbIdx + 1) + '. kép';
-    if (hasGsap) gsap.fromTo(lbImg,
-      { opacity: 0, x: (dir || 0) * 44, scale: dir ? 1 : 0.94 },
-      { opacity: 1, x: 0, scale: 1, duration: 0.45, ease: 'power3.out', onComplete: () => { lbBusy = false; } });
-    else { lbImg.style.opacity = 1; lbBusy = false; }
-  };
-  /* preload the new image, fade the old one out meanwhile */
-  lbBusy = true;
-  if (hasGsap && dir) gsap.to(lbImg, { opacity: 0, x: dir * -34, duration: 0.2, ease: 'power2.in' });
-  const pre = new Image();
-  pre.onload = apply;
-  pre.onerror = apply;
-  pre.src = src;
-  /* warm the neighbours */
-  [1, -1].forEach(k => { const im = new Image(); im.src = d.imgs[(lbIdx + k + d.imgs.length) % d.imgs.length]; });
-}
-
-function lbOpen(cat) {
-  lbCat = cat;
-  lbTitle.textContent = REF_DATA[cat].t;
-  lb.classList.add('is-open');
-  lb.setAttribute('aria-hidden', 'false');
-  if (lenis) lenis.stop();
-  lbImg.src = '';
-  lbShow(0, 0);
-  $('#lb-close').focus({ preventScroll: true });
-}
-
-function lbClose() {
-  lb.classList.remove('is-open');
-  lb.setAttribute('aria-hidden', 'true');
-  if (lenis) lenis.start();
-}
-
-$$('.ref-card').forEach(card =>
-  card.addEventListener('click', () => lbOpen(+card.dataset.cat)));
-$('#lb-close').addEventListener('click', lbClose);
-$('#lb-prev').addEventListener('click', () => !lbBusy && lbShow(lbIdx - 1, -1));
-$('#lb-next').addEventListener('click', () => !lbBusy && lbShow(lbIdx + 1, 1));
-$('#lb-stage').addEventListener('click', e => { if (e.target === e.currentTarget) lbClose(); });
-document.addEventListener('keydown', e => {
-  if (!lb.classList.contains('is-open')) return;
-  if (e.key === 'Escape') lbClose();
-  else if (e.key === 'ArrowRight' && !lbBusy) lbShow(lbIdx + 1, 1);
-  else if (e.key === 'ArrowLeft' && !lbBusy) lbShow(lbIdx - 1, -1);
-});
-/* touch swipe */
-let lbTouchX = null;
-lb.addEventListener('pointerdown', e => { lbTouchX = e.clientX; });
-lb.addEventListener('pointerup', e => {
-  if (lbTouchX === null || lbBusy) return;
-  const dx = e.clientX - lbTouchX;
-  lbTouchX = null;
-  if (Math.abs(dx) > 60) lbShow(lbIdx + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
 });
 
 /* mobile menu */
