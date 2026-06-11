@@ -560,10 +560,11 @@ if (hasGsap && typeof window.Lenis !== 'undefined' && !reduced) {
   gsap.ticker.lagSmoothing(0);
 }
 
-/* shared camera/scene state — tweened by ScrollTrigger, read by the renderer.
-   explodeT is the target (set from scroll), explode is the smoothed value the
-   renderer eases toward it every frame. */
-const view = { camX: 3.2, camY: 2.5, camZ: 7.6, tY: 2.05, gX: 1.9, gRot: 0, gRotPin: 0, explode: 0, explodeT: 0 };
+/* shared camera/scene state. viewT holds the targets written directly from
+   scroll progress (no tween start-value capture — that caused snapping);
+   view is what the renderer reads, eased toward viewT every frame. */
+const view  = { camX: 3.2, camY: 2.5, camZ: 7.6, tY: 2.05, gX: 1.9, gRot: 0, gRotPin: 0, explode: 0 };
+const viewT = { camX: 3.2, camY: 2.5, camZ: 7.6, gX: 1.9, gRot: 0, gRotPin: 0, explode: 0 };
 
 /* ============================================================
    THREE.JS — procedural spiral staircase
@@ -759,9 +760,12 @@ async function initScene() {
     sm.x += (sm.tx - sm.x) * 0.06;
     sm.y += (sm.ty - sm.y) * 0.06;
 
-    /* explode / assemble — ease toward the scroll-driven target */
-    view.explode += (view.explodeT - view.explode) * Math.min(1, dt * 4);
-    if (Math.abs(view.explodeT - view.explode) < 0.0005) view.explode = view.explodeT;
+    /* ease the whole camera state toward its scroll-driven targets */
+    const vk = Math.min(1, dt * 4.5);
+    for (const key in viewT) {
+      view[key] += (viewT[key] - view[key]) * vk;
+      if (Math.abs(viewT[key] - view[key]) < 0.0004) view[key] = viewT[key];
+    }
     const e = view.explode;
     for (let i = 0; i < COUNT; i++) {
       const u = pivots[i].userData;
@@ -927,21 +931,40 @@ function buildScrollFX() {
     scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }
   });
 
-  /* ----- 3D camera journey (tweens the shared `view` object) ----- */
-  const leg = (trig, vars) => gsap.to(view, {
-    ...vars, ease: 'none', immediateRender: false,
-    scrollTrigger: { trigger: trig, start: 'top bottom', end: 'top top', scrub: 1 }
+  /* ----- 3D camera journey — explicit keyframes interpolated from scroll
+     progress. Scrubbed to() tweens captured their start values at page load
+     (so every section animated from the HERO pose = visible snapping); here
+     each leg's FROM is by construction the previous leg's TO. ----- */
+  const KEYS = [
+    ['#bemutatkozas',   { camX: -3.8, camY: 3.6, camZ: 8.6,  gX: 2.2,  gRot: 1.3 }],
+    ['#szolgaltatasok', { camX: -1.5, camY: 1.9, camZ: 9.6,  gX: -2.3, gRot: 2.5 }],
+    ['#anyagok',        { camX: 0.4,  camY: 2.3, camZ: 8.2,  gX: 2.25, gRot: 3.6 }],
+    ['#folyamat',       { camX: 0,    camY: 2.7, camZ: 10.6, gX: 1.4,  gRot: 4.6, explode: 1 }]
+  ];
+  let pose = { camX: 3.2, camY: 2.5, camZ: 7.6, gX: 1.9, gRot: 0, explode: 0 }; /* hero */
+  KEYS.forEach(([trig, to]) => {
+    const from = pose, dest = { ...from, ...to };
+    const apply = p => { for (const key in dest) viewT[key] = from[key] + (dest[key] - from[key]) * p; };
+    ScrollTrigger.create({
+      trigger: trig, start: 'top bottom', end: 'top top',
+      onUpdate: self => apply(self.progress),
+      onLeave: () => apply(1),
+      onLeaveBack: () => apply(0)
+    });
+    pose = dest;
   });
-  leg('#bemutatkozas',  { camX: -3.8, camY: 3.6, camZ: 8.6, gX: 2.2,  gRot: 1.3 });
-  leg('#szolgaltatasok',{ camX: -1.5, camY: 1.9, camZ: 9.6, gX: -2.3, gRot: 2.5 });
-  leg('#anyagok',       { camX: 0.4,  camY: 2.3, camZ: 8.2, gX: 2.25, gRot: 3.6 });
-  leg('#folyamat',      { camX: 0,    camY: 2.7, camZ: 10.6, gX: 1.4, gRot: 4.6, explodeT: 1 });
 
-  /* dim the canvas behind the service list, brighten for materials */
-  gsap.to('#gl', { opacity: 0.4, ease: 'none', immediateRender: false,
-    scrollTrigger: { trigger: '#szolgaltatasok', start: 'top 75%', end: 'top 15%', scrub: true } });
-  gsap.to('#gl', { opacity: 1, ease: 'none', immediateRender: false,
-    scrollTrigger: { trigger: '#anyagok', start: 'top 95%', end: 'top 35%', scrub: true } });
+  /* dim the canvas behind the service list, brighten for materials —
+     same direct-from-progress pattern */
+  const glEl = $('#gl');
+  const glLeg = (trig, startPos, endPos, o0, o1) => ScrollTrigger.create({
+    trigger: trig, start: startPos, end: endPos,
+    onUpdate: s => { glEl.style.opacity = (o0 + (o1 - o0) * s.progress).toFixed(3); },
+    onLeave: () => { glEl.style.opacity = o1; },
+    onLeaveBack: () => { glEl.style.opacity = o0; }
+  });
+  glLeg('#szolgaltatasok', 'top 75%', 'top 15%', 1, 0.4);
+  glLeg('#anyagok', 'top 95%', 'top 35%', 0.4, 1);
 
   /* ----- FOLYAMAT: pinned — the staircase assembles itself ----- */
   const psteps = $$('.pstep');
@@ -966,8 +989,8 @@ function buildScrollFX() {
       setStep(Math.min(3, Math.floor(self.progress * 4)));
       pbar.style.transform = `scaleX(${self.progress})`;
       /* drive the assembly straight from pin progress — the renderer smooths it */
-      view.explodeT = 1 - self.progress;
-      view.gRotPin = self.progress * 2.1;
+      viewT.explode = 1 - self.progress;
+      viewT.gRotPin = self.progress * 2.1;
     }
   });
 
